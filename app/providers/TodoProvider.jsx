@@ -5,15 +5,26 @@ import { useContext } from "react";
 
 const TodoContext = createContext();
 
-const initialTodoState = ["Learn React Context API"];
+const initialTodoListState = ["Learn React Context API"];
 const TodoProvider = ({ children }) => {
-    const [todoList, setTodoList] = useState(initialTodoState);
+    const [todoList, setTodoList] = useState(initialTodoListState);
 
     const getNumberOfTodoItems = () => todoList.length;
+
+    const addTodo = (mewTodoItem) => {
+        setTodoList([...todoList, mewTodoItem]);
+    }
+
+    const removeTodo = (todoIndex) => {
+        const newList = todoList.filter((_, index) => index !== todoIndex);
+        setTodoList(newList);
+        
+    }
 
     const contextValue = {
         todoList,
         getNumberOfTodoItems,
+        addTodo,
     }
     return (
         <TodoContext.Provider value={contextValue}>
